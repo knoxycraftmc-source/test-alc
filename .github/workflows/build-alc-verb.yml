@@ -1,13 +1,13 @@
 name: Build alc-verb
 
 on:
-  workflow_dispatch:   # manual trigger
+  workflow_dispatch:
   push:
     branches: [ main ]
 
 jobs:
   build:
-    runs-on: macos-14   # or macos-13 / macos-15
+    runs-on: macos-15          # currently available (or use macos-latest / macos-26)
 
     steps:
       - name: Checkout AppleALC
