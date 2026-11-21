@@ -1,0 +1,32 @@
+name: Build alc-verb
+
+on:
+  workflow_dispatch:   # manual trigger
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-14   # or macos-13 / macos-15
+
+    steps:
+      - name: Checkout AppleALC
+        uses: actions/checkout@v4
+        with:
+          repository: acidanthera/AppleALC
+          path: AppleALC
+
+      - name: Build alc-verb
+        working-directory: AppleALC
+        run: |
+          xcodebuild -project AppleALC.xcodeproj \
+                     -target alc-verb \
+                     -configuration Release \
+                     CODE_SIGNING_ALLOWED=NO \
+                     CODE_SIGN_IDENTITY=""
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: alc-verb
+          path: AppleALC/build/Release/alc-verb
